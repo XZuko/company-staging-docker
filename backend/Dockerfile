@@ -6,7 +6,8 @@ COPY . .
 RUN dotnet publish -c Release -o /app --no-restore
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
-RUN apk add --no-cache wget
+RUN apk add --no-cache icu-libs wget
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 WORKDIR /app
 COPY --from=build /app .
 USER $APP_UID
